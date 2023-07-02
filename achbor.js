@@ -1,7 +1,14 @@
-function myFunction() {
-  console.log("Function was called");
+const sum = (num1,num2) => num1 + num2;
+const PI = 3.14;
+
+class BenTesting{
+constructor(){
+  console.log('ben added a clear method')
 }
 
-var myString = "String!";
-module.exports.myFunction = myFunction;
-module.exports.myString = myString;
+
+
+
+}
+
+module.exports = {sum : sum, PI : PI, BenTesting : BenTesting};
