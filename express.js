@@ -6,26 +6,30 @@ const Joi = require('joi');
 const { result } = require('lodash');
 
 app.use('/public',express.static(path.join(__dirname,'static')));
+app.set('view engine','ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'static','index.html'));
+app.get('/:userQuery',(req,res)=>{
+res.render('index',{data : {userQuery : req.params.userQuery}});
+
+
 });
 
 app.post('/',(req,res)=>{
     console.log(req.body);
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
         email : Joi.string().trim().required(),
         password : Joi.string().min(5).max(10).required(),
     });
-    Joi.ValidationError(req.body,schema,(err,result)=>{
-        if(err){
+    const { error, value } = schema.validate(req.body);
+        if(error){
             res.send('an error has occured');
-        }
-        console.log(result);
+        }else{
+        console.log(value);
         res.send('posted data as expected');
-    })
+    }
 });
 
 
