@@ -11,6 +11,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+app.use((req,res,next)=>{
+    console.log(req.url,req.method);
+    next();
+
+}); 
+
 app.get('/:userQuery',(req,res)=>{
 res.render('index',{data : {userQuery : req.params.userQuery}});
 
